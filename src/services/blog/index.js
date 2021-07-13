@@ -50,7 +50,7 @@ router.route('/:postId')
             const query = `UPDATE blogPosts SET ${fields} WHERE id=${req.params.postId} RETURNING *`
             const data = await db.query(query)
 
-            res.send(data.rows[0])
+            res.send(data.row[0])
         } catch (error) {
             console.log(error)
             next(error)
@@ -58,7 +58,14 @@ router.route('/:postId')
     })
     .delete( async (req, res, next) => {
         try {
-            
+            const query = `DELETE FROM blogPosts WHERE id=${req.params.postId}`
+            const data = await db.query(query)
+
+            if(data.rowCount > 0) {
+                res.send(`Post successfuly deleted`)
+            } else {
+                res.status(404).send('Post Not Found!')
+            }
         } catch (error) {
             console.log(error)
             next(error)
