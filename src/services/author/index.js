@@ -42,7 +42,15 @@ router.route('/:authorId')
     })
     .put( async (req, res, next) => {
         try {
-            
+            const { name, surname, avatar } = req.body
+            const fields = Object.keys(req.body)
+                .map(key => `${key}='${req.body[key]}'`)
+                .join(",")
+
+            const query = `UPDATE authors SET ${fields} WHERE id=${req.params.authorId} RETURNING *`
+            const data = await db.query(query)
+
+            res.send(data.rows[0])
         } catch (error) {
             console.log(error)
             next(error)
