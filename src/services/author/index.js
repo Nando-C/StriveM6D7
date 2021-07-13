@@ -31,7 +31,10 @@ router.route('/')
 router.route('/:authorId')
     .get( async (req, res, next) => {
         try {
-            
+            const query = `SELECT * FROM authors WHERE id=${req.params.authorId}`
+            const data = await db.query(query)
+
+            res.send(data.rows[0])
         } catch (error) {
             console.log(error)
             next(error)
