@@ -1,7 +1,5 @@
 import pg from 'pg'
 
-const { Pool } = pg
-
-const pool = new Pool()
+const pool = new pg.Pool()
 
 export default pool

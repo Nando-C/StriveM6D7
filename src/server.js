@@ -2,7 +2,7 @@ import express from 'express'
 import listEndpoints from 'express-list-endpoints'
 import cors from 'cors'
 import { badRequestMiddleware, catchAllErrorsMiddleware, notFoundMiddleware } from './errorMiddlewares.js'
-
+import blogRoutes from './services/blog/index.js'
 
 const port = process.env.PORT || 3001
 
@@ -13,7 +13,7 @@ server.use(cors())
 server.use(express.json())
 
 // ===================== ROUTES  =================================
-
+server.use('/blog', blogRoutes)
 // ===================== ERROR HANDLERS ==========================
 server.use(notFoundMiddleware)
 server.use(badRequestMiddleware)
